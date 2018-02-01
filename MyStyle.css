@@ -19,6 +19,11 @@ input#UpgradeClick{
     left: 30px;
     top: 100px;
 }
+input#UpgradeGenProfit{
+    position: absolute;
+    top: 250px;
+    left: 50px; 
+}
 
 p {
     color: black;
@@ -31,4 +36,10 @@ p2 {
     position: absolute;
     left: 350px;
     top: 50px;
+}
+p3 {
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 500px;
 }

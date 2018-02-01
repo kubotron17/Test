@@ -10,6 +10,9 @@ var GenPrice = 50;
 var GenStart = false;
 var GenRunning = false;
 
+var GenProfitUpgradePrice = 250;
+var GenProfitUpgradeAmount = 1;
+
 var DisTimer = setInterval(UpdateDis, 100);
 var ManifestTimer = setInterval(UpdateManifest, 250);
 var GenCheckTimer = setInterval(GenCheck, 250);
@@ -29,17 +32,19 @@ function UpgradeClick(){
 }
 
 function UpdateDis(){
-    document.getElementById("DisMoney").innerHTML = "$" + round(Money, 2);
+    document.getElementById("DisMoney").innerHTML = "$" + round(Money, 2) + "   GenTick: " + GenTickAmount + " GenProfitUpg: " + GenProfitUpgradeAmount;
 }
 
 function UpdateManifest(){
-    document.getElementById("Manifest").innerHTML = "You Own: <br>Clicks: " + ClickAmount + "<br><br><br>You Generate:<br>" + ClickAmount + "/Click";
+    document.getElementById("Manifest").innerHTML = "You Own: <br>Clicks: " + ClickAmount + "<br>Generators: " + GenAmount + "<br><br><br>You Generate:<br>$" + ClickAmount + "/Click<br>$" + round(((GenAmount * GenTickAmount) / (GenTickInterval / 1000)), 2) + "/Sec";
+    document.getElementById("GenInfo").innerHTML = "Generators: " + GenAmount + "<br>GenTick: $" + GenTickAmount + "<br>Gentime: " + (GenTickInterval / 1000) + "<br>$" + round(((GenAmount * GenTickAmount) / (GenTickInterval / 1000)), 2) + "/Sec";
 }
 
 function BuyGen(){
     if(Money >= GenPrice){
         Money -= GenPrice;
         GenPrice *= 1.15;
+        GenPrice = round(GenPrice, 2);
         GenAmount ++;
         if(GenRunning == false){
          GenStart = true;   
@@ -48,6 +53,28 @@ function BuyGen(){
     }
     else{
         console.log("You need additional  $" + (GenPrice - Money) +" to buy this");
+    }
+}
+
+function UpgradeGenProfit(){
+    if(Money >= GenProfitUpgradePrice){
+        Money -= GenProfitUpgradePrice;
+        GenProfitUpgradePrice *= 1.3;
+        GenProfitUpgradePrice = round(GenProfitUpgradePrice, 2);
+        GenTickAmount += GenProfitUpgradeAmount;
+        if(GenTickAmount < 8 ){
+            GenProfitUpgradeAmount = 1;
+        }
+        else if(GenTickAmount < 32){
+            GenProfitUpgradeAmount = 2;
+        }
+        else if(GenTickAmount < 256){
+            GenProfitUpgradeAmount = 4;
+        }
+        else{
+            GenProfitUpgradeAmount = 8;
+        }
+        document.getElementById("UpgradeGenProfit").value = "+$" + GenProfitUpgradeAmount + " Gen Profit   $" + GenProfitUpgradePrice;
     }
 }
 
@@ -67,8 +94,6 @@ function GenTick(){
     Money += GenAmount * GenTickAmount;
 }
 
-
-
 function Clickx5(){
     Click();
     Click();
@@ -84,4 +109,5 @@ function round(value, decimals) {
 function Start(){
     document.getElementById("Gen").value = "+1 Gen   $" + GenPrice;
     document.getElementById("UpgradeClick").value = "+1 Click   $" + UpgradeClickCost;
+    document.getElementById("UpgradeGenProfit").value = "+$" + round(GenProfitUpgradeAmount, 2) + " Gen Profit   $" + GenProfitUpgradePrice;
 }

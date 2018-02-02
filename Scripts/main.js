@@ -24,7 +24,7 @@ function Click(){
 function UpgradeClick(){
     if(Money >= UpgradeClickCost){
         Money -= UpgradeClickCost;
-        UpgradeClickCost *= 1.05;
+        UpgradeClickCost *= 1.20;
         UpgradeClickCost = UpgradeClickCost.toFixed(2);
         ClickAmount ++;
         document.getElementById("UpgradeClick").value = "+1 Click   $" + UpgradeClickCost;
@@ -43,9 +43,9 @@ function UpdateManifest(){
 function BuyGen(){
     if(Money >= GenPrice){
         Money -= GenPrice;
-        GenPrice *= 1.15;
-        GenPrice = round(GenPrice, 2);
         GenAmount ++;
+        GenPrice = ((GenPrice * 1.15 ** GenAmount) /1.3 );
+        GenPrice = round(GenPrice, 2);
         if(GenRunning == false){
          GenStart = true;   
         }

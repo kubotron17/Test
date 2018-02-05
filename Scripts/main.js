@@ -6,7 +6,7 @@ var UpgradeClickCost = 25;
 var GenAmount = 0;
 var GenTickAmount = 1;
 var GenTickInterval = 4000;
-var GenPrice = 50;
+var GenPrice = 59;
 var GenStart = false;
 var GenRunning = false;
 
@@ -44,7 +44,7 @@ function BuyGen(){
     if(Money >= GenPrice){
         Money -= GenPrice;
         GenAmount ++;
-        GenPrice = ((GenPrice * 1.15 ** GenAmount) /1.3 );
+        GenPrice = ((GenPrice * 1.1 ** GenAmount) /1.3 );
         GenPrice = round(GenPrice, 2);
         if(GenRunning == false){
          GenStart = true;   
@@ -110,4 +110,5 @@ function Start(){
     document.getElementById("Gen").value = "+1 Gen   $" + GenPrice;
     document.getElementById("UpgradeClick").value = "+1 Click   $" + UpgradeClickCost;
     document.getElementById("UpgradeGenProfit").value = "+$" + round(GenProfitUpgradeAmount, 2) + " Gen Profit   $" + GenProfitUpgradePrice;
+    var GenPrice = 59;
 }
